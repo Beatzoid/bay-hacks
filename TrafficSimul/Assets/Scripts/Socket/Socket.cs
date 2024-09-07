@@ -37,26 +37,8 @@ public class Socket : MonoBehaviour
     {
         try
         {
-            const int chunkSize = 65536;  // Define the chunk size to break the data
-            int messageLength = message.Length;
-            int totalChunks = Mathf.CeilToInt((float)messageLength / chunkSize);
-
-            Debug.Log("Sending " + totalChunks + " chunks");
-
-            for (int i = 0; i < totalChunks; i++)
-            {
-                // Determine the chunk start and end index
-                int startIndex = i * chunkSize;
-                int length = Mathf.Min(chunkSize, messageLength - startIndex);
-
-                // Extract the substring (chunk) and send it
-                string chunk = message.Substring(startIndex, length);
-
-                // Add metadata to indicate it's a chunk (can be extended to include sequence number or chunk number)
-                string chunkMessage = $"{i + 1}/{totalChunks}|{chunk}";
-                byte[] data = Encoding.UTF8.GetBytes(chunkMessage);
-                client.Send(data, data.Length, remoteEndPoint);
-            }
+            byte[] data = Encoding.UTF8.GetBytes(message);
+            client.Send(data, data.Length, remoteEndPoint);
         }
         catch (Exception err)
         {
@@ -79,7 +61,7 @@ public class Socket : MonoBehaviour
         receiveThread.Start();
 
         // Initialize (seen in comments window)
-        print("UDP Comms Initialised");
+        Debug.Log("UDP Comms Initialised");
     }
 
     // Receive data, update packets received

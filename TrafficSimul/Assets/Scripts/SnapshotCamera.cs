@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using uk.vroad.api.etc;
 using UnityEngine;
 
@@ -31,52 +32,52 @@ public class SnapshotCamera : MonoBehaviour
             resHeight = snapCam.targetTexture.height;
         }
 
-        snapCam.gameObject.SetActive(false);
+        socket = FindObjectOfType<Socket>();
 
-        socket = FindObjectOfType<Socket>().GetComponent<Socket>();
-
-        CallTakeSnapshot();
+        StartCoroutine(RepeatedSnapshots());
     }
 
-    void CallTakeSnapshot()
+    IEnumerator RepeatedSnapshots()
     {
-        snapCam.gameObject.SetActive(true);
-    }
-
-    void LateUpdate()
-    {
-        if (snapCam.gameObject.activeInHierarchy)
+        while (true)
         {
-            Texture2D snapshot = new Texture2D(resWidth, resHeight, TextureFormat.RGB24, false);
+            yield return new WaitForSeconds(1f);
 
-            snapCam.Render();
-            RenderTexture.active = snapCam.targetTexture;
+            Debug.Log("Taking snapshot");
 
-            snapshot.ReadPixels(new Rect(0, 0, resWidth, resHeight), 0, 0);
-
-            Texture2D croppedImage = ResampleAndCrop(snapshot, 270, 1080, 0.35f);
-
-            byte[] bytes = croppedImage.EncodeToPNG();
-            string fileName = SnapshotName();
-
-            string base64 = Convert.ToBase64String(bytes);
-
-            File.WriteAllBytes(fileName, bytes);
-
-            socket.SendData(base64);
-
-            snapCam.gameObject.SetActive(false);
-            Debug.Log("Took snapshot");
+            TakeSnapshot();
         }
+    }
+
+    void TakeSnapshot()
+    {
+        Texture2D snapshot = new Texture2D(resWidth, resHeight, TextureFormat.RGB24, false);
+
+        snapCam.Render();
+        RenderTexture.active = snapCam.targetTexture;
+
+        snapshot.ReadPixels(new Rect(0, 0, resWidth, resHeight), 0, 0);
+
+        Texture2D croppedImage = ResampleAndCrop(snapshot, 270, 1080, 0.35f);
+
+        byte[] bytes = croppedImage.EncodeToPNG();
+        string fileName = SnapshotName();
+
+        File.WriteAllBytes(fileName, bytes);
+
+        socket.SendData(fileName.Split("/").Last());
+
+        Debug.Log("Took snapshot");
+
     }
 
     string SnapshotName()
     {
-        return string.Format("{0}/Snapshots/snapshot_{1}x{2}_{3}.jpg",
+        return string.Format("{0}/../../python/snapshots/snapshot_{1}x{2}_{3}.jpg",
             Application.dataPath,
             resWidth,
             resHeight,
-            System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
+            DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
     }
 
     Texture2D ResampleAndCrop(Texture2D source, int targetWidth, int targetHeight, float horizontalOffset = 0.0f)
