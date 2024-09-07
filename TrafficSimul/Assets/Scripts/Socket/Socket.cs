@@ -32,6 +32,8 @@ public class Socket : MonoBehaviour
     UdpClient client;
     IPEndPoint remoteEndPoint;
     Thread receiveThread; // Receiving Thread
+    public Component[] TrafficLightDirection;
+
 
     public void SendData(string message) // Use to send data to Python
     {
@@ -87,6 +89,13 @@ public class Socket : MonoBehaviour
     private void ProcessInput(string input)
     {
         // PROCESS INPUT RECEIVED STRING HERE
+        if (input == "1")
+        {
+            for (int i = 0; i < TrafficLightDirection.Length; i++)
+            {
+                TrafficLightDirection[i].GetComponent<TrafficLightScript>().Switch();
+            }
+        }
 
         if (!isTxStarted) // First data arrived so tx started
         {

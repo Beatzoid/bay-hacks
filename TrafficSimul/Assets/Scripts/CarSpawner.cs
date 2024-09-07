@@ -9,7 +9,7 @@ public class CarSpawner : MonoBehaviour
     public float minSpawnInterval = 2f;
     public float maxSpawnInterval = 10f;
     public int maxCarsSpawned = 10;
-    public TrafficLightScript trafficLightScript;
+    public Component trafficLightScript;
     private int carsSpawned = 0;
     public Quaternion rotation;
     void Start()
