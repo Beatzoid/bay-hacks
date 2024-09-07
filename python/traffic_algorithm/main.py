@@ -30,13 +30,13 @@ parser.add_argument('--T_horizon', type=int, default=2048, help='lenth of long t
 parser.add_argument('--Distribution', type=str, default='Beta', help='Should be one of Beta ; GS_ms  ;  GS_m')
 parser.add_argument('--Max_train_steps', type=int, default=int(5e6), help='Max training steps')
 parser.add_argument('--save_interval', type=int, default=int(5e5), help='Model saving interval, in steps.')
-parser.add_argument('--eval_interval', type=int, default=int(5e3), help='Model evaluating interval, in steps.')
+parser.add_argument('--eval_interval', type=int, default=int(1e4), help='Model evaluating interval, in steps.')
 
 parser.add_argument('--gamma', type=float, default=0.99, help='Discounted Factor')
 parser.add_argument('--lambd', type=float, default=0.95, help='GAE Factor')
 parser.add_argument('--clip_rate', type=float, default=0.2, help='PPO Clip rate')
 parser.add_argument('--K_epochs', type=int, default=10, help='PPO update times')
-parser.add_argument('--net_width', type=int, default=128, help='Hidden net width')
+parser.add_argument('--net_width', type=int, default=64, help='Hidden net width')
 parser.add_argument('--a_lr', type=float, default=2e-4, help='Learning rate of actor')
 parser.add_argument('--c_lr', type=float, default=2e-4, help='Learning rate of critic')
 parser.add_argument('--l2_reg', type=float, default=1e-3, help='L2 regulization coefficient for Critic')
@@ -74,7 +74,7 @@ def main():
     torch.cuda.manual_seed(opt.seed)
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
-    print("Random Seed: {}".format(opt.seed))
+    # print("Random Seed: {}".format(opt.seed))
 
     # Use tensorboard to record training curves
     if opt.write:
@@ -128,9 +128,9 @@ def main():
 
                 '''Record & log'''
                 if total_steps % opt.eval_interval == 0:
-                    score = evaluate_policy(eval_env, agent, opt.max_action, turns=3) # evaluate the policy for 3 times, and get averaged result
+                    score = evaluate_policy(eval_env, agent, opt.max_action, turns=64) # evaluate the policy for 3 times, and get averaged result
                     if opt.write: writer.add_scalar('ep_r', score, global_step=total_steps)
-                    print('EnvName:',EnvName[opt.EnvIdex],'seed:',opt.seed,'steps: {}k'.format(int(total_steps/1000)),'score:', score)
+                    print('EnvName:',EnvName[opt.EnvIdex],'steps: {}k'.format(int(total_steps/1000)),'score:', score)
 
                 '''Save model'''
                 if total_steps % opt.save_interval==0:
