@@ -1,16 +1,20 @@
 import random
+import numpy as np
 
 class intersection():
     def __init__(self) -> None:
         pass
 
-    def reset(self):
+    def reset(self, seed=0):
+        self.seed = seed
         self.num_cars = [0, 0, 0, 0]
         self.car_timers = [0.0, 0.0, 0.0, 0.0]
         self.light_value = 0 # 0 is green light one way and the reverse
         self.reward = 0
         self.timestep = 0
         self.done = False
+
+        return np.array(self.num_cars), 0
 
 
 
@@ -52,8 +56,10 @@ class intersection():
         if self.timestep > 100:
             self.done = True
         
-        return [self.num_cars, self.car_timers], self.reward, self.done
+        return np.array(self.num_cars), self.reward, self.done, False, 0
         
+    def render(self):
+        pass
 
     def close(self):
         pass
