@@ -69,7 +69,7 @@ public class CarController : MonoBehaviour
                 float carInFrontSpeed = carInFront.velocity.magnitude;
 
                 // Adjust target speed based on the car in front
-                if (distanceToCar <= stopDistance)
+                if (distanceToCar <= 4)
                 {
                     Status = "stopping becaues of car";
                     targetSpeed = 0f; // Stop if too close
@@ -79,9 +79,9 @@ public class CarController : MonoBehaviour
                     Debug.Log("slowing down");
                     float timeToStop = (distanceToCar / (currentSpeed / deceleration));
                     float minDistance = timeToStop * currentSpeed / 2;
-                    if (minDistance + 5 * currentSpeed > distanceToCar)
+                    if (minDistance + 6 * currentSpeed - 2 * carInFrontSpeed > distanceToCar)
                     {
-                        float slowDownFactor = (distanceToCar) / (minDistance + 20 * currentSpeed);
+                        float slowDownFactor = (distanceToCar) / (minDistance + 6 * currentSpeed - 2 * carInFrontSpeed);
                         Status = "light slowdown with a " + slowDownDistance + " and a " + distanceToCar + " for " + slowDownFactor;
                         targetSpeed = Mathf.Min(targetSpeed, maxSpeed * slowDownFactor);
                     }
@@ -94,9 +94,9 @@ public class CarController : MonoBehaviour
             {
                 Debug.Log("not passed center"); ;
                 Debug.Log(lightColor);
-                if (lightColor == "red" || lightColor == "yellow")
+                if (lightColor == "red" || lightColor == "yellow") { 
                     Debug.Log("in red or yellow");
-                {
+                
                     if (distanceToLight <= stopDistance)
                     {
                         Debug.Log("stopping");
@@ -110,13 +110,18 @@ public class CarController : MonoBehaviour
                         float minDistance = timeToStop * currentSpeed / 2;
                         if (minDistance + 5 * currentSpeed > distanceToLight)
                         {
-                            float slowDownFactor = (distanceToLight) / (minDistance + 20 * currentSpeed);
+                            float slowDownFactor = (distanceToLight) / (minDistance + 5 * currentSpeed);
                             Status = "light slowdown with a " + slowDownDistance + " and a " + distanceToLight + " for " + slowDownFactor;
                             targetSpeed = Mathf.Min(targetSpeed, maxSpeed * slowDownFactor);
                         }
 
                     }
                 }
+             
+            else
+            {
+                Status = "in green with " + targetSpeed;
+            }
 
             }
 
