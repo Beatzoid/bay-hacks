@@ -8,10 +8,10 @@ public class TrafficLightScript : MonoBehaviour
     public Component yellowLight;
     public Component redLight;
     private float timer = 0f;
-    private float[] durations = { 3.5f, 3.5f, 1f };
+    private float[] durations = { 30f, 3f, 1f };
     private Component currentLight;
     private int currentColorIndex = 0;
-    private Color[] colors = { Color.red, Color.green, Color.yellow };
+    private string[] colors = { "red", "green", "yellow" };
     // Start is called before the first frame update
     void Start()
     {
@@ -49,7 +49,7 @@ public class TrafficLightScript : MonoBehaviour
             currentLight.GetComponent<Light>().enabled = true;
         }
     }
-    public Color GetCurrentColor()
+    public string GetCurrentColor()
     {
         return colors[currentColorIndex];
     }
