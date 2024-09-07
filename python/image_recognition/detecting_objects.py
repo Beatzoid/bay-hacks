@@ -53,14 +53,6 @@ def detecting_the_objects():
             break
         overlay = frame.copy()
         
-        # # draw the lines
-        # cv2.line(frame, start_line_A, end_line_A, (0, 255, 0), 12)
-        # cv2.line(frame, start_line_B, end_line_B, (255, 0, 0), 12)
-        # cv2.line(frame, start_line_C, end_line_C, (0, 0, 255), 12)
-        
-        # frame = cv2.addWeighted(overlay, 0.5, frame, 0.5, 0)
-
-        
 
         ############################################################
         ### Detect the objects in the frame using the YOLO model ###

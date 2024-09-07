@@ -1,5 +1,5 @@
 import udpsocket as U
-from image_recognition.object_detection_tracking.py import object_detection
+from image_recognition.detecting_objects.py import detecting_the_objects
 from traffic_algorithm.algorithmic_timing.py import traffic_algorithm
 from python_utils.py import jpg_to_single_frame_mp4, extract_first_digit, String
 
