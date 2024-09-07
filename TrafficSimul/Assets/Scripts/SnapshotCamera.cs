@@ -10,6 +10,8 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class SnapshotCamera : MonoBehaviour
 {
+    public int id;
+
     public float horizontalOffset;
 
     Socket socket;
@@ -75,10 +77,9 @@ public class SnapshotCamera : MonoBehaviour
 
     string SnapshotName()
     {
-        return string.Format("{0}/../../python/snapshots/snapshot_{1}x{2}_{3}.jpg",
+        return string.Format("{0}/../../python/snapshots/{1}_{2}.jpg",
             Application.dataPath,
-            resWidth,
-            resHeight,
+            id,
             DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss-fff"));
     }
 
