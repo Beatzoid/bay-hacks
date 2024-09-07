@@ -10,6 +10,8 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class SnapshotCamera : MonoBehaviour
 {
+    public float horizontalOffset;
+
     Socket socket;
 
     Camera snapCam;
@@ -58,7 +60,7 @@ public class SnapshotCamera : MonoBehaviour
 
         snapshot.ReadPixels(new Rect(0, 0, resWidth, resHeight), 0, 0);
 
-        Texture2D croppedImage = ResampleAndCrop(snapshot, 270, 1080, 0.35f);
+        Texture2D croppedImage = ResampleAndCrop(snapshot, 270, 1080, horizontalOffset);
 
         byte[] bytes = croppedImage.EncodeToPNG();
         string fileName = SnapshotName();
@@ -77,7 +79,7 @@ public class SnapshotCamera : MonoBehaviour
             Application.dataPath,
             resWidth,
             resHeight,
-            DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
+            DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss-fff"));
     }
 
     Texture2D ResampleAndCrop(Texture2D source, int targetWidth, int targetHeight, float horizontalOffset = 0.0f)
