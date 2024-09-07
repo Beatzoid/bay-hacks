@@ -19,7 +19,7 @@ class intersection():
 
 
     def step(self, action):
-        self.reward = 0
+        self.reward = 0.5
         spawn_car = random.random() < 0.5
         if spawn_car:
             self.num_cars[random.randint(0, 3)] += random.randint(0, 4)
@@ -31,11 +31,9 @@ class intersection():
         if self.light_value == 0: # Controling light values
             self.num_cars[1] -= 1
             self.num_cars[3] -= 1
-            self.reward += .5
         elif self.light_value == 1:
             self.num_cars[0] -= 1
             self.num_cars[2] -= 1
-            self.reward += .5
         else:
             print("uh oh")
         
