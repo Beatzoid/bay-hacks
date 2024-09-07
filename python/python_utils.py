@@ -32,8 +32,15 @@ def extract_first_digit(s):
         return int(s[0])
     return None
 
+def String(a):
+    return str(a)
+
 if __name__ == '__main__':
     # Example usage
     image_path = "snapshots/0_2024-09-07_16-01-54-304.jpg"
     output_file = "output_video.mp4"
     jpg_to_single_frame_mp4(image_path, output_file)
+
+    stringtest = "1hello"
+    print("expected value: 6")
+    print("actual value:", extract_first_digit(stringtest) + 5)
