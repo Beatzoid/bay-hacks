@@ -90,6 +90,9 @@ def main():
     #     kwargs["a_lr"] *= 2
     #     kwargs["c_lr"] *= 4
 
+    total = 0
+    change = 0
+
     if not os.path.exists('model'): os.mkdir('model')
     agent = PPO_agent(**vars(opt)) # transfer opt to dictionary, and use it to init PPO_agent
     if opt.Loadmodel: agent.load(BrifEnvName[opt.EnvIdex], opt.ModelIdex)
@@ -110,7 +113,12 @@ def main():
                 '''Interact with Env'''
                 a, logprob_a = agent.select_action(s, deterministic=False) # use stochastic when training
                 act = Action_adapter(a,opt.max_action) #[0,1] to [-max,max]
+
+                if (act > 0.5):
+                    change += 1
+                total += 1
                 s_next, r, dw, tr, info = env.step(act) # dw: dead&win; tr: truncated
+                s_next = s_next / 10
                 r = Reward_adapter(r, opt.EnvIdex)
                 done = (dw or tr)
 
@@ -131,6 +139,7 @@ def main():
                     score = evaluate_policy(eval_env, agent, opt.max_action, turns=64) # evaluate the policy for 3 times, and get averaged result
                     if opt.write: writer.add_scalar('ep_r', score, global_step=total_steps)
                     print('EnvName:',EnvName[opt.EnvIdex],'steps: {}k'.format(int(total_steps/1000)),'score:', score)
+                    print("% times switched:", change / total)
 
                 '''Save model'''
                 if total_steps % opt.save_interval==0:

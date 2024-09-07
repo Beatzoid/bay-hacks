@@ -6,7 +6,8 @@ env.reset()
 done = False
 sum_reward = 0
 while not done:
-    observation, reward, done = env.step(random.randint(0, 1))
+    observation, reward, done, term, inf = env.step(random.randint(0, 1))
+    observation = observation / 10
     print(observation, reward, done)
     sum_reward += reward
     print(sum_reward)

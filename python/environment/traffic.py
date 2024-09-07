@@ -25,19 +25,21 @@ class intersection():
             self.num_cars[random.randint(0, 3)] += random.randint(0, 4)
         
         # print(action)
-        if action > 0.2: 
+        if action > 0.5: 
             self.light_value = 1 - self.light_value
         
         if self.light_value == 0: # Controling light values
             self.num_cars[1] -= 1
             self.num_cars[3] -= 1
             self.reward += .5
-        else:
+        elif self.light_value == 1:
             self.num_cars[0] -= 1
             self.num_cars[2] -= 1
             self.reward += .5
+        else:
+            print("uh oh")
         
-        # make num cars not equal 0 and that the light actually let cars through
+        # make num cars not equal 0 and make sure that the light actually lets cars through and there wasn't no cars
         for i in range(len(self.num_cars)):
             if self.num_cars[i] < 0:
                 self.reward -= 0.25
