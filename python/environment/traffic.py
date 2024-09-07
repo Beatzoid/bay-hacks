@@ -24,7 +24,8 @@ class intersection():
         if spawn_car:
             self.num_cars[random.randint(0, 3)] += random.randint(0, 4)
         
-        if action > 0.2: 
+        # print(action)
+        if action > 0.7: 
             self.light_value = 1 - self.light_value
         
         if self.light_value == 0: # Controling light values

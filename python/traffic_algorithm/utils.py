@@ -10,12 +10,14 @@ class BetaActor(nn.Module):
 
 		self.l1 = nn.Linear(state_dim, net_width)
 		self.l2 = nn.Linear(net_width, net_width)
+		self.l3 = nn.Linear(net_width, net_width)
 		self.alpha_head = nn.Linear(net_width, action_dim)
 		self.beta_head = nn.Linear(net_width, action_dim)
 
 	def forward(self, state):
 		a = torch.tanh(self.l1(state))
 		a = torch.tanh(self.l2(a))
+		a = torch.tanh(self.l3(a))
 
 		alpha = F.softplus(self.alpha_head(a)) + 1.0
 		beta = F.softplus(self.beta_head(a)) + 1.0

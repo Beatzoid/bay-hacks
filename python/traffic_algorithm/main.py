@@ -36,7 +36,7 @@ parser.add_argument('--gamma', type=float, default=0.99, help='Discounted Factor
 parser.add_argument('--lambd', type=float, default=0.95, help='GAE Factor')
 parser.add_argument('--clip_rate', type=float, default=0.2, help='PPO Clip rate')
 parser.add_argument('--K_epochs', type=int, default=10, help='PPO update times')
-parser.add_argument('--net_width', type=int, default=32, help='Hidden net width')
+parser.add_argument('--net_width', type=int, default=128, help='Hidden net width')
 parser.add_argument('--a_lr', type=float, default=2e-4, help='Learning rate of actor')
 parser.add_argument('--c_lr', type=float, default=2e-4, help='Learning rate of critic')
 parser.add_argument('--l2_reg', type=float, default=1e-3, help='L2 regulization coefficient for Critic')
