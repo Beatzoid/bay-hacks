@@ -37,8 +37,8 @@ def String(a):
 
 if __name__ == '__main__':
     # Example usage
-    image_path = "snapshots/0_2024-09-07_16-01-54-304.jpg"
-    output_file = "output_video.mp4"
+    image_path = "snapshots/2_2024-09-07_16-37-18-971.jpg"
+    output_file = "lkj.mp4"
     jpg_to_single_frame_mp4(image_path, output_file)
 
     stringtest = "1hello"

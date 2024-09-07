@@ -12,12 +12,11 @@ from deep_sort.tools import generate_detections as gdet
 from helper import create_video_writer
 
 def detecting_the_objects():
-    
     # define some parameters
-    conf_threshold = 0.5
+    conf_threshold = 0.4
     max_cosine_distance = 0.4
     nn_budget = None
-    points = [deque(maxlen=32) for _ in range(1000)] # list of deques to store the points
+    points = [deque(maxlen=32) for _ in range(1000)]  # list of deques to store the points
 
     # Initialize the video capture and the video writer objects
     video_cap = cv2.VideoCapture("image_recognition/lkj.mp4")
@@ -42,6 +41,8 @@ def detecting_the_objects():
     np.random.seed(42)  # to get the same colors
     colors = np.random.randint(0, 255, size=(len(class_names), 3))  # (80, 3)
 
+    total_objects = 0  # Initialize a counter for total objects detected
+
     # loop over the frames
     while True:
         # starter time to computer the fps
@@ -49,69 +50,66 @@ def detecting_the_objects():
         ret, frame = video_cap.read()
         # if there is no frame, we have reached the end of the video
         if not ret:
-            # print("End of the video file...")
             break
-        overlay = frame.copy()
         
-
-        ############################################################
-        ### Detect the objects in the frame using the YOLO model ###
-        ############################################################
-
-        # run the YOLO model on the frame
+        # Detect objects using YOLO
         results = model(frame)
 
-        # loop over the results
-        for result in results:
-            # initialize the list of bounding boxes, confidences, and class IDs
-            bboxes = []
-            confidences = []
-            class_ids = []
+        # Process YOLO detections
+        bboxes = []
+        confidences = []
+        class_ids = []
 
-            # loop over the detections
+        for result in results:
             for data in result.boxes.data.tolist():
                 x1, y1, x2, y2, confidence, class_id = data
-                x = int(x1)
-                y = int(y1)
-                w = int(x2) - int(x1)
-                h = int(y2) - int(y1)
-                class_id = int(class_id)
-
-                # filter out weak predictions by ensuring the confidence is
-                # greater than the minimum confidence
                 if confidence > conf_threshold:
+                    x, y, w, h = int(x1), int(y1), int(x2) - int(x1), int(y2) - int(y1)
                     bboxes.append([x, y, w, h])
-                    confidences.append(confidence)
-                    class_ids.append(class_id)
-                    # cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-                    
-        ############################################################
-        ### Track the objects in the frame using DeepSort        ###
-        ############################################################
+                    confidences.append(float(confidence))
+                    class_ids.append(int(class_id))
 
-        # get the names of the detected objects
+        # Prepare detections for DeepSORT
         names = [class_names[class_id] for class_id in class_ids]
-
-        # get the features of the detected objects
         features = encoder(frame, bboxes)
-        # convert the detections to deep sort format
-        dets = []
-        for bbox, conf, class_name, feature in zip(bboxes, confidences, names, features):
-            dets.append(Detection(bbox, conf, class_name, feature))
-            # print(bbox, conf, class_name, feature)
-            # print()
-            # print()
+        detections = [Detection(bbox, conf, class_name, feature) 
+                      for bbox, conf, class_name, feature 
+                      in zip(bboxes, confidences, names, features)]
 
-        # run the tracker on the detections
+        # Update tracker
         tracker.predict()
-        tracker.update(dets)
+        tracker.update(detections)
 
-        # loop over the tracked objects
-        X = len(tracker.tracks)
-        
+        # Count unique objects
+        unique_objects = len(tracker.tracks)
+        total_objects = max(total_objects, unique_objects)
 
-    return X
+        # Optional: Draw bounding boxes and labels
+        for track in tracker.tracks:
+            if not track.is_confirmed() or track.time_since_update > 1:
+                continue
+            bbox = track.to_tlbr()
+            class_id = track.get_class()
+            color = [int(c) for c in colors[class_id]]
+            cv2.rectangle(frame, (int(bbox[0]), int(bbox[1])), (int(bbox[2]), int(bbox[3])), color, 2)
+            cv2.putText(frame, f"{class_names[class_id]}-{track.track_id}", 
+                        (int(bbox[0]), int(bbox[1]) - 10), cv2.FONT_HERSHEY_SIMPLEX, 
+                        0.5, color, 2)
 
+        # Write the frame to the output video
+        writer.write(frame)
 
+        # Calculate and print FPS
+        end = datetime.datetime.now()
+        fps = 1 / (end - start).total_seconds()
+        print(f"FPS: {fps:.2f}")
 
-print(detecting_the_objects())
+    # Release resources
+    video_cap.release()
+    writer.release()
+    cv2.destroyAllWindows()
+
+    return total_objects
+
+# Run the function and print the result
+print(f"Total unique objects detected: {detecting_the_objects()}")
