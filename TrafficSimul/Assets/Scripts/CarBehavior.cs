@@ -4,7 +4,7 @@ using System;
 [RequireComponent(typeof(Rigidbody))]
 public class CarController : MonoBehaviour
 {
-    public TrafficLightScript trafficLight;
+    public Component trafficLight;
     public float baseMaxSpeed = 20f;
     public float baseAcceleration = 5f;
     public float baseDeceleration = 4f;
@@ -45,7 +45,7 @@ public class CarController : MonoBehaviour
 
     void FixedUpdate()
     {
-        string lightColor = trafficLight.GetCurrentColor();
+        string lightColor = trafficLight.GetComponent<TrafficLightScript>().GetCurrentColor();
         float distanceToLight = Vector3.Distance(transform.position, trafficLight.transform.position);
 
         //if (!passedCenter && distanceToLight <= centerPointDistance)
@@ -69,7 +69,7 @@ public class CarController : MonoBehaviour
                 float carInFrontSpeed = carInFront.velocity.magnitude;
 
                 // Adjust target speed based on the car in front
-                if (distanceToCar <= 4)
+                if (distanceToCar <= slowDownDistance/4)
                 {
                     Status = "stopping becaues of car";
                     targetSpeed = 0f; // Stop if too close
