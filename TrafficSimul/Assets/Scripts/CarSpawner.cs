@@ -33,9 +33,9 @@ public class CarSpawner : MonoBehaviour
     {
         if (carPrefab != null && spawnPoint != null)
         {
-            GameObject newCar = Instantiate(carPrefab, spawnPoint.position, spawnPoint.rotation);
+            GameObject newCar = Instantiate(carPrefab, spawnPoint.position, rotation);
+            newCar.transform.rotation = transform.rotation;
             carsSpawned++;
-            newCar.transform.rotation = rotation;
             // Optional: You can add any additional setup for the spawned car here
             // For example, you might want to set up its CarController component
             CarController carController = newCar.GetComponent<CarController>();
