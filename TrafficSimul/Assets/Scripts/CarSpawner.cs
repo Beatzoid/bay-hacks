@@ -11,7 +11,7 @@ public class CarSpawner : MonoBehaviour
     public int maxCarsSpawned = 10;
     public TrafficLightScript trafficLightScript;
     private int carsSpawned = 0;
-
+    public Quaternion rotation;
     void Start()
     {
   //      Vector3 spawnPoint = new Vector3(-5324.71f, -1081.593f, -4590.27f);
@@ -35,7 +35,7 @@ public class CarSpawner : MonoBehaviour
         {
             GameObject newCar = Instantiate(carPrefab, spawnPoint.position, spawnPoint.rotation);
             carsSpawned++;
-
+            newCar.transform.rotation = rotation;
             // Optional: You can add any additional setup for the spawned car here
             // For example, you might want to set up its CarController component
             CarController carController = newCar.GetComponent<CarController>();
