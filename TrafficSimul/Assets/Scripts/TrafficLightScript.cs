@@ -8,7 +8,7 @@ public class TrafficLightScript : MonoBehaviour
     public Component yellowLight;
     public Component redLight;
     private float timer = 0f;
-    private float[] durations = { 30f, 3f, 1f };
+    private float[] durations = { 10f, 10f,  3f };
     private Component currentLight;
     private int currentColorIndex = 0;
     private string[] colors = { "red", "green", "yellow" };
