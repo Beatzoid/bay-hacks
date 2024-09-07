@@ -61,7 +61,7 @@ def main():
     env = intersection()
     eval_env = intersection()
 
-    opt.state_dim = 4
+    opt.state_dim = 5
     opt.action_dim = 1
     opt.max_action = 1.0
     opt.max_steps = 100

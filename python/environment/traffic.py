@@ -7,7 +7,7 @@ class intersection():
 
     def reset(self, seed=0):
         self.seed = seed
-        self.num_cars = [0, 0, 0, 0]
+        self.num_cars = [0, 0, 0, 0, 0] # extra for lightvalue
         self.car_timers = [0.0, 0.0, 0.0, 0.0]
         self.light_value = 0 # 0 is green light one way and the reverse
         self.reward = 0
@@ -22,9 +22,9 @@ class intersection():
         self.reward = 0
         spawn_car = random.random() < 0.5
         if spawn_car:
-            self.num_cars[random.randint(0, 3)] += random.randint(0, 2)
+            self.num_cars[random.randint(0, 3)] += random.randint(0, 4)
         
-        if action: 
+        if action > 0.2: 
             self.light_value = 1 - self.light_value
         
         if self.light_value == 0: # Controling light values
@@ -44,8 +44,10 @@ class intersection():
 
         # car timers for reward system
         for count, i in enumerate(self.num_cars):
+            if count > 3:
+                break
             if i != 0:
-                self.car_timers[count] += .05 * self.num_cars[count]
+                self.car_timers[count] += .5 * self.num_cars[count]
             else:
                 self.car_timers[count] = 0
         
@@ -56,6 +58,7 @@ class intersection():
         if self.timestep > 100:
             self.done = True
         
+        self.num_cars[-1] = self.light_value
         return np.array(self.num_cars), self.reward, self.done, False, 0
         
     def render(self):
