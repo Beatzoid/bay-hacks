@@ -12,8 +12,9 @@ obs, _ = env.reset()
 sum_of_sum_reward = 0
 
 # Idea: Find most num of cars on a street and turn lights for that street
+n_eps = 100000
 
-for i in tqdm(range(100)):
+for i in tqdm(range(n_eps)):
     done = False
     sum_reward = 0
     while not done:
@@ -32,5 +33,5 @@ for i in tqdm(range(100)):
 
     # print(sum_reward/100)
     sum_of_sum_reward += sum_reward
-print("final sum avg rew:", sum_of_sum_reward/(100 * 100))
+print("final sum avg rew:", sum_of_sum_reward/(n_eps))
 

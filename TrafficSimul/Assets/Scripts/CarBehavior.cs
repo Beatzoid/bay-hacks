@@ -138,8 +138,17 @@ public class CarController : MonoBehaviour
 
             currentSpeed += desiredAcceleration * Time.fixedDeltaTime;
             currentSpeed = Mathf.Clamp(currentSpeed, 0f, maxSpeed);
+        Vector3 force;
+            if (transform.rotation.x > 0)
+        {
+            force = transform.forward * desiredAcceleration * rb.mass;
 
-            Vector3 force = transform.forward * desiredAcceleration * rb.mass;
+        }
+        else
+        {
+            force = -transform.forward * desiredAcceleration * rb.mass;
+
+        }
             rb.AddForce(force);
 
             rb.velocity = transform.forward * currentSpeed;
