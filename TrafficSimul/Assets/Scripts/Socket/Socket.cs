@@ -91,6 +91,7 @@ public class Socket : MonoBehaviour
         // PROCESS INPUT RECEIVED STRING HERE
         if (input == "1")
         {
+            Debug.LogError("WORKS!");
             for (int i = 0; i < TrafficLightDirection.Length; i++)
             {
                 TrafficLightDirection[i].GetComponent<TrafficLightScript>().Switch();

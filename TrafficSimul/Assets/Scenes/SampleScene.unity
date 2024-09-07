@@ -155,6 +155,11 @@ MonoBehaviour:
   IP: 127.0.0.1
   rxPort: 8000
   txPort: 8001
+  TrafficLightDirection:
+  - {fileID: 972529276}
+  - {fileID: 1260476096}
+  - {fileID: 727960491}
+  - {fileID: 1978120259}
 --- !u!4 &10744300
 Transform:
   m_ObjectHideFlags: 0
@@ -1150,7 +1155,7 @@ GameObject:
   - component: {fileID: 727960489}
   - component: {fileID: 727960488}
   m_Layer: 0
-  m_Name: TrafficLightController2 (3)
+  m_Name: TrafficLight Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1171,6 +1176,8 @@ MonoBehaviour:
   greenLight: {fileID: 2116715566}
   yellowLight: {fileID: 1088712222}
   redLight: {fileID: 1462463414}
+  python: 0
+  direction: 1
 --- !u!23 &727960489
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1340,7 +1347,7 @@ Transform:
   m_GameObject: {fileID: 765157027}
   serializedVersion: 2
   m_LocalRotation: {x: 0.0006479396, y: 0.70710653, z: -0.0006479396, w: 0.70710653}
-  m_LocalPosition: {x: -5277.81, y: -1081.6941, z: -4525.92}
+  m_LocalPosition: {x: -5276.7, y: -1081.6941, z: -4525.92}
   m_LocalScale: {x: 5, y: 0.2, z: 90}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1372,7 +1379,7 @@ Transform:
   m_GameObject: {fileID: 777895487}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -5256.602, y: -1080.83, z: -4524.58}
+  m_LocalPosition: {x: -5256.602, y: -1080.83, z: -4523.77}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1395,7 +1402,7 @@ MonoBehaviour:
   minSpawnInterval: 2
   maxSpawnInterval: 3
   maxCarsSpawned: 2
-  trafficLightScript: {fileID: 727960488}
+  trafficLightScript: {fileID: 727960491}
   rotation: {x: 0, y: 45, z: 0, w: 0}
 --- !u!1001 &802780564
 PrefabInstance:
@@ -1505,7 +1512,7 @@ MonoBehaviour:
   minSpawnInterval: 2
   maxSpawnInterval: 3
   maxCarsSpawned: 2
-  trafficLightScript: {fileID: 1260476093}
+  trafficLightScript: {fileID: 1260476096}
   rotation: {x: 90, y: 0, z: 0, w: 0}
 --- !u!4 &831006179
 Transform:
@@ -1516,7 +1523,7 @@ Transform:
   m_GameObject: {fileID: 831006177}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -5410.8, y: -1080.83, z: -4526.2}
+  m_LocalPosition: {x: -5410.8, y: -1080.83, z: -4526.78}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1701,7 +1708,7 @@ GameObject:
   - component: {fileID: 972529274}
   - component: {fileID: 972529277}
   m_Layer: 0
-  m_Name: TrafficLightController2
+  m_Name: TrafficLight Spawner1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1766,7 +1773,7 @@ Transform:
   m_GameObject: {fileID: 972529273}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -5327.906, y: -1076.46, z: -4523.691}
+  m_LocalPosition: {x: -5327.906, y: -1076.46, z: -4522.61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1792,6 +1799,8 @@ MonoBehaviour:
   greenLight: {fileID: 1566976264}
   yellowLight: {fileID: 336868588}
   redLight: {fileID: 1745529342}
+  python: 0
+  direction: 0
 --- !u!1 &1088712221
 GameObject:
   m_ObjectHideFlags: 0
@@ -1920,7 +1929,7 @@ MonoBehaviour:
   minSpawnInterval: 2
   maxSpawnInterval: 3
   maxCarsSpawned: 2
-  trafficLightScript: {fileID: 1978120256}
+  trafficLightScript: {fileID: 1978120259}
   rotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!4 &1196455286
 Transform:
@@ -2031,63 +2040,6 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!1001 &1235664330
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2806714669947893885, guid: 0311372f9c5684cab971852ab085633f, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -5261.527
-      objectReference: {fileID: 0}
-    - target: {fileID: 2806714669947893885, guid: 0311372f9c5684cab971852ab085633f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1081.6334
-      objectReference: {fileID: 0}
-    - target: {fileID: 2806714669947893885, guid: 0311372f9c5684cab971852ab085633f, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -4524.9106
-      objectReference: {fileID: 0}
-    - target: {fileID: 2806714669947893885, guid: 0311372f9c5684cab971852ab085633f, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 2806714669947893885, guid: 0311372f9c5684cab971852ab085633f, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2806714669947893885, guid: 0311372f9c5684cab971852ab085633f, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 2806714669947893885, guid: 0311372f9c5684cab971852ab085633f, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2806714669947893885, guid: 0311372f9c5684cab971852ab085633f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2806714669947893885, guid: 0311372f9c5684cab971852ab085633f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: 2806714669947893885, guid: 0311372f9c5684cab971852ab085633f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3294564219125457607, guid: 0311372f9c5684cab971852ab085633f, type: 3}
-      propertyPath: m_Name
-      value: MainRedCar
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 0311372f9c5684cab971852ab085633f, type: 3}
 --- !u!1 &1260476092
 GameObject:
   m_ObjectHideFlags: 0
@@ -2101,7 +2053,7 @@ GameObject:
   - component: {fileID: 1260476094}
   - component: {fileID: 1260476093}
   m_Layer: 0
-  m_Name: TrafficLightController2 (2)
+  m_Name: TrafficLight Spawner2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2122,6 +2074,8 @@ MonoBehaviour:
   greenLight: {fileID: 244126619}
   yellowLight: {fileID: 606925023}
   redLight: {fileID: 1197210287}
+  python: 0
+  direction: 1
 --- !u!23 &1260476094
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2181,7 +2135,7 @@ Transform:
   m_GameObject: {fileID: 1260476092}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -5329.31, y: -1076.46, z: -4527.91}
+  m_LocalPosition: {x: -5329.83, y: -1076.46, z: -4527.91}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2333,7 +2287,7 @@ MonoBehaviour:
   minSpawnInterval: 2
   maxSpawnInterval: 3
   maxCarsSpawned: 2
-  trafficLightScript: {fileID: 972529277}
+  trafficLightScript: {fileID: 972529276}
   rotation: {x: 0, y: 180, z: 0, w: 0}
 --- !u!4 &1426905175
 Transform:
@@ -2344,7 +2298,7 @@ Transform:
   m_GameObject: {fileID: 1426905173}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -5327.07, y: -1080.83, z: -4455.72}
+  m_LocalPosition: {x: -5327.42, y: -1080.83, z: -4455.72}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3124,7 +3078,7 @@ Transform:
   m_GameObject: {fileID: 1776166597}
   serializedVersion: 2
   m_LocalRotation: {x: 0.0009135162, y: -0, z: -0, w: 0.9999996}
-  m_LocalPosition: {x: -5325.98, y: -1081.6941, z: -4478.7}
+  m_LocalPosition: {x: -5325.98, y: -1081.6941, z: -4477.5}
   m_LocalScale: {x: 5, y: 0.2, z: 90}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3324,7 +3278,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5325.78, y: -1081.694, z: -4525.87}
-  m_LocalScale: {x: 6, y: 0.2, z: 6}
+  m_LocalScale: {x: 8, y: 0.3, z: 8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -3342,7 +3296,7 @@ GameObject:
   - component: {fileID: 1978120257}
   - component: {fileID: 1978120256}
   m_Layer: 0
-  m_Name: TrafficLightController2 (1)
+  m_Name: TrafficLight Spawn3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3363,6 +3317,8 @@ MonoBehaviour:
   greenLight: {fileID: 163831373}
   yellowLight: {fileID: 605506387}
   redLight: {fileID: 1811302978}
+  python: 0
+  direction: 0
 --- !u!23 &1978120257
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3422,7 +3378,7 @@ Transform:
   m_GameObject: {fileID: 1978120255}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5323.93, y: -1076.53, z: -4528.68}
+  m_LocalPosition: {x: -5323.93, y: -1076.53, z: -4529.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3725,7 +3681,6 @@ SceneRoots:
   - {fileID: 1426905175}
   - {fileID: 831006179}
   - {fileID: 1196455286}
-  - {fileID: 1235664330}
   - {fileID: 1773115384}
   - {fileID: 1562381870}
   - {fileID: 231945006}
